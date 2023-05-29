@@ -3,11 +3,10 @@ import chalk from "chalk"
 import COS from "cos-nodejs-sdk-v5"
 import { relative, join } from "path"
 import fse from "fs-extra"
-import { IUpload, ISliceUpload, Callback }  from './type'
 
 const requiredOption = ["SecretId", "SecretKey", "Bucket", "AppId", "Region"]
 
-function getCosConf<T extends object>(extra: T): T {
+function getCosConf(extra) {
   const conf = {
     // common conf
     ...extra
@@ -15,7 +14,7 @@ function getCosConf<T extends object>(extra: T): T {
   return conf
 }
 
-function upload(option: IUpload) {
+function upload(option) {
   const {
     cosBase = "",
     cwd = "",
@@ -32,7 +31,7 @@ function upload(option: IUpload) {
     }
   })
 
-  walkSync(cwd, async (fileName: string) => {
+  walkSync(cwd, async (fileName) => {
     try {
       const pathName = relative(cwd, fileName)
       const data = await uploadFile(getCosConf({
@@ -48,7 +47,7 @@ function upload(option: IUpload) {
   })
 }
 
-function walkSync(currentDirPath = '', callback: Callback) {
+function walkSync(currentDirPath = '', callback) {
   fse.readdirSync(currentDirPath, { withFileTypes: true }).forEach(function(dirent) {
     var filePath = join(currentDirPath, dirent.name)
     if (dirent.isFile()) {
@@ -59,14 +58,14 @@ function walkSync(currentDirPath = '', callback: Callback) {
   })
 }
 
-function uploadFile(conf: ISliceUpload, cos: COS) {
+function uploadFile(conf, cos) {
   return new Promise((resolve, reject) => {
     cos.sliceUploadFile({
       Bucket: conf.Bucket,
       Region: conf.Region,
       Key: conf.Key,
       FilePath: conf.FilePath,
-    }, (err: any, data: any) => {
+    }, (err, data) => {
       let upErr = new Error("Upload error.")
       if (err) {
         upErr.message = err

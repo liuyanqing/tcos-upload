@@ -1,7 +1,7 @@
 import { resolve } from "path"
 import minimist from "minimist"
 import fse from "fs-extra"
-import upload from "../index"
+import upload from "../index.js"
 
 const args = minimist(process.argv.slice(2))
 
