@@ -7,7 +7,7 @@
 	"scripts": {
 		"postinstall": "husky install && chmod u+x .husky/pre-commit && chmod u+x .husky/commit-msg",
 		"demo": "node demo/upload.js",
-		"cz": "git cz",
+		"cz": "git-cz",
 		"version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
 		"tsc": "tsc"
 	},
@@ -45,6 +45,7 @@
 		"@types/fs-extra": "^11.0.1",
 		"conventional-changelog-cli": "^2.2.2",
 		"cz-conventional-changelog": "^3.3.0",
-		"eslint": "^8.40.0"
+		"eslint": "^8.40.0",
+		"git-cz": "^4.9.0"
 	}
 }
