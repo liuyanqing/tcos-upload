@@ -1,6 +1,6 @@
 {
 	"name": "tcos-upload",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"description": "上传静态资源到腾讯云 COS 的 Nodejs 插件",
 	"main": "index.js",
   "types": "index.d.ts",
@@ -9,13 +9,20 @@
     "type": "git",
     "url": "https://github.com/liuyanqing/tcos-upload.git"
   },
+  "keywords": [
+    "腾讯云",
+    "文件上传",
+    "file",
+    "cos",
+    "upload"
+  ],
 	"scripts": {
 		"postinstall": "husky install && chmod u+x .husky/pre-commit && chmod u+x .husky/commit-msg",
 		"demo": "node demo/upload.js",
 		"cz": "git-cz",
 		"version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
 	},
-	"author": "",
+	"author": "auroraliu <auroralyqing@gmail.com>",
 	"license": "ISC",
 	"config": {
 		"commitizen": {
