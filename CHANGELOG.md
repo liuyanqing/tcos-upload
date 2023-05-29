@@ -1,3 +1,12 @@
+## [1.0.3](https://github.com/liuyanqing/tcos-upload/compare/v1.0.2...v1.0.3) (2023-05-29)
+
+
+### Bug Fixes
+
+* 🐛 add error retry ([d9a3b8c](https://github.com/liuyanqing/tcos-upload/commit/d9a3b8c00698ed367c9fdc3bf26074926db6ecc6))
+
+
+
 ## [1.0.2](https://github.com/liuyanqing/tcos-upload/compare/v1.0.1...v1.0.2) (2023-05-29)
 
 
