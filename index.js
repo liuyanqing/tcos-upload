@@ -8,8 +8,7 @@ const requiredOption = ["SecretId", "SecretKey", "Bucket", "AppId", "Region"]
 
 function getCosConf(extra) {
   const conf = {
-    // common conf
-    ...extra
+    ...extra,
   }
   return conf
 }
@@ -31,7 +30,7 @@ function upload(option) {
     }
   })
 
-  walkSync(cwd, async (fileName) => {
+  const uploadFiles = async (fileName, retry = true) => {
     try {
       const pathName = relative(cwd, fileName)
       const data = await uploadFile(getCosConf({
@@ -42,13 +41,23 @@ function upload(option) {
 
       console.log(`${chalk.green(`Uploaded successfully: ${data?.uploadData?.Location}`)}`)
     } catch (error) {
-      throw new Error(`${fileName} Uploaded failed: ${error}`)
+      if (retry) {
+        uploadFiles(fileName, false)
+        console.log(`${chalk.red(`${fileName} upload retry`)}`)
+        return
+      }
+      throw new Error(`${fileName} Uploaded failed: ${error.message}`)
     }
+  }
+
+  walkSync(cwd, async (fileName) => {
+    uploadFiles(fileName, true)
   })
 }
 
-function walkSync(currentDirPath = '', callback) {
-  fse.readdirSync(currentDirPath, { withFileTypes: true }).forEach(function(dirent) {
+function walkSync(currentDirPath = "", callback) {
+  const dirList = fse.readdirSync(currentDirPath, { withFileTypes: true })
+  dirList.forEach(function(dirent) {
     var filePath = join(currentDirPath, dirent.name)
     if (dirent.isFile()) {
       callback(filePath)
@@ -66,7 +75,7 @@ function uploadFile(conf, cos) {
       Key: conf.Key,
       FilePath: conf.FilePath,
     }, (err, data) => {
-      let upErr = new Error("Upload error.")
+      const upErr = new Error("Upload error.")
       if (err) {
         upErr.message = err
         if (err && err.error && err.error.Message) {
@@ -76,7 +85,7 @@ function uploadFile(conf, cos) {
       } else if (data && data.statusCode === 200) {
         resolve({
           uploadData: data,
-          uploaded: true
+          uploaded: true,
         })
       } else {
         upErr.message = data

@@ -5,13 +5,13 @@ import upload from "../index.js"
 
 const args = minimist(process.argv.slice(2))
 
-const buildMode = args.mode || "im"
+const buildMode = args.mode || "test13"
 
 const cosMap = {}
 const COS_BASE = "camin/"
 const cwd = resolve("dist")
 
-// h5-static-cos.json 里是资源上传的 COS 的参数，使用该插件时可换成自己 COS 的参数
+// h5-static-cos.json 里是资源上传的 COS 的参数，使用该插件时需自行替换成自己 COS 的参数
 const cosFile = resolve("./h5-static-cos.json")
 
 if (fse.existsSync(cosFile)) {
@@ -28,19 +28,13 @@ if (fse.existsSync(cosFile)) {
   } catch (err) {}
 }
 
-// upload({
-//   cosBase: `${COS_BASE}assets/`,
-//   cwd: resolve(cwd, "assets"),
-//   backup: "",
-//   ...cosMap,
-// })
-
 upload({
-  cosBase: `${COS_BASE}not-found/`,
-  cwd: resolve(cwd, "not-found"),
+  cosBase: `${COS_BASE}assets/`,
+  cwd: resolve(cwd, "assets"),
   backup: "",
   ...cosMap,
 })
+
 
 // const files = fse.readdirSync(cwd).filter(name => (!(/assets$/).test(name)))
 

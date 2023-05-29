@@ -1,14 +1,12 @@
-interface IOption {
+interface IUpload {
+  cosBase: string
+  AppId: string
   Bucket: string
   Region: string
-  AppId: string
-}
-
-interface IUpload extends IOption {
-  cosBase: string
   SecretId: string
   SecretKey: string
   cwd?: string
+  retry?: boolean
 }
 
 declare const upload: (option: IUpload) => void;

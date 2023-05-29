@@ -6,20 +6,13 @@ module.exports = {
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended"
   ],
   "overrides": [
   ],
-  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint"
-  ],
   "rules": {
     "indent": [
       "error",
@@ -36,14 +29,6 @@ module.exports = {
     "semi": [
       "error",
       "never"
-    ],
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      {
-        vars: "all",
-        args: "after-used",
-        ignoreRestSiblings: true,
-      },
     ],
     "comma-dangle": [
       "warn",

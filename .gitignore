@@ -23,3 +23,4 @@ dist-ssr
 *.sln
 *.sw?
 h5-static-cos.json
+lib
