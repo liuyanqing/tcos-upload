@@ -17,7 +17,7 @@
     "upload"
   ],
 	"scripts": {
-		"postinstall": "husky install && chmod u+x .husky/pre-commit && chmod u+x .husky/commit-msg",
+		"prepare-husky": "husky install && chmod u+x .husky/pre-commit && chmod u+x .husky/commit-msg",
 		"demo": "node demo/upload.js",
 		"cz": "git-cz",
 		"version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
