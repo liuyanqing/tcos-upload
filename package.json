@@ -1,16 +1,16 @@
 {
 	"name": "tcos-upload",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "上传静态资源到腾讯云 COS 的 Nodejs 插件",
 	"main": "dist/index.cjs",
 	"module": "index.js",
 	"types": "index.d.ts",
 	"type": "module",
-  "files": [
-    "dist",
-    "index.d.ts",
-    "index.js"
-  ],
+	"files": [
+		"dist",
+		"index.d.ts",
+		"index.js"
+	],
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/liuyanqing/tcos-upload.git"
@@ -53,7 +53,7 @@
 	},
 	"dependencies": {
 		"commander": "^10.0.1",
-    "chalk": "^3.0.0",
+		"chalk": "^3.0.0",
 		"cos-nodejs-sdk-v5": "^2.12.1",
 		"fs-extra": "^11.1.1",
 		"minimist": "^1.2.8",

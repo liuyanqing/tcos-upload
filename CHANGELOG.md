@@ -1,3 +1,12 @@
+## [1.0.2](https://github.com/liuyanqing/tcos-upload/compare/v1.0.1...v1.0.2) (2023-05-29)
+
+
+### Features
+
+* add commonjs file ([9282dac](https://github.com/liuyanqing/tcos-upload/commit/9282dac10a8add131df6c10bfe4b23b3d502ad32))
+
+
+
 ## 1.0.1 (2023-05-29)
 
 
