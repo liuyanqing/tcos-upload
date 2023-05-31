@@ -2,7 +2,7 @@ module.exports = {
   "env": {
     "browser": true,
     "es2021": true,
-    "node": true
+    "node": true,
   },
   "extends": [
     "eslint:recommended",
@@ -11,24 +11,24 @@ module.exports = {
   ],
   "parserOptions": {
     "ecmaVersion": "latest",
-    "sourceType": "module"
+    "sourceType": "module",
   },
   "rules": {
     "indent": [
       "error",
-      2
+      2,
     ],
     "linebreak-style": [
       "error",
-      "unix"
+      "unix",
     ],
     "quotes": [
       "error",
-      "double"
+      "double",
     ],
     "semi": [
       "error",
-      "never"
+      "never",
     ],
     "comma-dangle": [
       "warn",
@@ -40,5 +40,5 @@ module.exports = {
         functions: "never",
       },
     ],
-  }
+  },
 }

@@ -50,7 +50,7 @@ function upload(option) {
     }
   }
 
-  walkSync(cwd, async (fileName) => {
+  walkSync(cwd, (fileName) => {
     uploadFiles(fileName, true)
   })
 }

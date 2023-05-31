@@ -5,7 +5,7 @@ import upload from "../index.js"
 
 const args = minimist(process.argv.slice(2))
 
-const buildMode = args.mode || "test13"
+const buildMode = args.mode
 
 const cosMap = {}
 const COS_BASE = "camin/"
@@ -22,7 +22,7 @@ if (fse.existsSync(cosFile)) {
       datas.cosMap[buildMode],
       {
         SecretId: datas.SecretId,
-        SecretKey: datas.SecretKey
+        SecretKey: datas.SecretKey,
       }
     )
   } catch (err) {}
@@ -36,19 +36,19 @@ upload({
 })
 
 
-// const files = fse.readdirSync(cwd).filter(name => (!(/assets$/).test(name)))
+const files = fse.readdirSync(cwd).filter(name => (!(/assets$/).test(name)))
 
-// files.forEach(async (folder) => {
-//   upload({
-//     cosBase: `${COS_BASE}${folder}/`,
-//     cwd: resolve(cwd, folder),
-//     backup: "",
-//     ...cosMap,
-//   })
-//   // upload({
-//   //   cosBase: `${COS_BASE}backup/${version}/${folder}/`,
-//   //   cwd: resolve(cwd, folder),
-//   //   ...cosMap,
-//   // })
-// })
+files.forEach(async (folder) => {
+  upload({
+    cosBase: `${COS_BASE}${folder}/`,
+    cwd: resolve(cwd, folder),
+    backup: "",
+    ...cosMap,
+  })
+  // upload({
+  //   cosBase: `${COS_BASE}backup/${version}/${folder}/`,
+  //   cwd: resolve(cwd, folder),
+  //   ...cosMap,
+  // })
+})
 
