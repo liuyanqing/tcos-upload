@@ -33,7 +33,11 @@ upload({
   cwd: resolve(cwd, "assets"),
   backup: "",
   ...cosMap,
+}).then(() => {
+  console.log("----finish 1")
 })
+
+
 
 
 const files = fse.readdirSync(cwd).filter(name => (!(/assets$/).test(name)))
@@ -44,7 +48,10 @@ files.forEach(async (folder) => {
     cwd: resolve(cwd, folder),
     backup: "",
     ...cosMap,
+  }).then(() => {
+    console.log("----finish 2")
   })
+
   // upload({
   //   cosBase: `${COS_BASE}backup/${version}/${folder}/`,
   //   cwd: resolve(cwd, folder),

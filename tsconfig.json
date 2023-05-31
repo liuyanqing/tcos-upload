@@ -1,11 +1,13 @@
 {
+  "include": ["index.js"],
   "compilerOptions": {
-    "target": "es2019",
-    "moduleResolution": "node",
-    "strict": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "skipLibCheck": false
-  },
-  "exclude": ["dist"]
+    "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "lib",
+    "declarationMap": true,
+    "skipLibCheck": true,
+    "checkJs": false,
+    "preserveWatchOutput": true
+  }
 }

@@ -30,44 +30,75 @@ function upload(option) {
     }
   })
 
-  const uploadFiles = async (fileName, retry = true) => {
-    try {
-      const pathName = relative(cwd, fileName)
-      const data = await uploadFile(getCosConf({
-        Key: `${cosBase}${pathName}`,
-        FilePath: fileName,
-        ...restOption,
-      }), cos)
+  let needUploadfileNum = 0
+  let uploadedfileNum = 0
+  let traverseEnd = false
 
-      console.log(`${chalk.green(`Uploaded successfully: ${data?.uploadData?.Location}`)}`)
-    } catch (error) {
-      if (retry) {
-        uploadFiles(fileName, false)
-        console.log(`${chalk.red(`${fileName} upload retry`)}`)
-        return
+  return new Promise((resolve) => {
+
+    const uploadFiles = async (filePath, retry = true) => {
+      try {
+        const relativePath = relative(cwd, filePath)
+        const data = await cosUploadFile(getCosConf({
+          Key: `${cosBase}${relativePath}`,
+          FilePath: filePath,
+          ...restOption,
+        }), cos)
+        uploadedfileNum++
+        checkFinish()
+
+        console.log(`${chalk.green(`Uploaded successfully: ${data?.uploadData?.Location}`)}`)
+      } catch (error) {
+        if (retry) {
+          uploadFiles(filePath, false)
+          console.log(`${chalk.red(`${filePath} upload retry`)}`)
+          return
+        }
+        uploadedfileNum++
+        checkFinish()
+        throw new Error(`${filePath} Uploaded failed: ${error.message}`)
       }
-      throw new Error(`${fileName} Uploaded failed: ${error.message}`)
     }
-  }
 
-  walkSync(cwd, (fileName) => {
-    uploadFiles(fileName, true)
+    const checkFinish =() => {
+      if (traverseEnd && needUploadfileNum === uploadedfileNum) {
+        resolve()
+      }
+    }
+
+    cwdWalk({
+      cwd,
+      onFile: (filePath) => {
+        needUploadfileNum++
+        uploadFiles(filePath, true)
+      },
+    })
+    traverseEnd = true
   })
+
 }
 
-function walkSync(currentDirPath = "", callback) {
-  const dirList = fse.readdirSync(currentDirPath, { withFileTypes: true })
+function cwdWalk({
+  cwd = "",
+  onFile,
+}) {
+  const dirList = fse.readdirSync(cwd, { withFileTypes: true })
   dirList.forEach(function(dirent) {
-    var filePath = join(currentDirPath, dirent.name)
+    var filePath = join(cwd, dirent.name)
     if (dirent.isFile()) {
-      callback(filePath)
-    } else if (dirent.isDirectory()) {
-      walkSync(filePath, callback)
+      onFile(filePath)
+      return
+    }
+    if (dirent.isDirectory()) {
+      cwdWalk({
+        cwd: filePath,
+        onFile,
+      })
     }
   })
 }
 
-function uploadFile(conf, cos) {
+function cosUploadFile(conf, cos) {
   return new Promise((resolve, reject) => {
     cos.sliceUploadFile({
       Bucket: conf.Bucket,
