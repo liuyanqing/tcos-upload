@@ -25,7 +25,7 @@
 		"prepare-husky": "husky install && chmod u+x .husky/pre-commit && chmod u+x .husky/commit-msg",
 		"demo": "node demo/upload.js",
 		"build": "rm -rf dist && rollup index.js --file dist/index.cjs --format cjs",
-		"prepublishOnly": "pnpm run build && pnpm run types",
+		"prepublishOnly": "pnpm run build && pnpm run tsc",
 		"cz": "git-cz",
 		"version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
 		"tsc": "tsc"
