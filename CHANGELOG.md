@@ -1,3 +1,12 @@
+## [1.0.6](https://github.com/liuyanqing/tcos-upload/compare/v1.0.5...v1.0.6) (2023-06-01)
+
+
+### Bug Fixes
+
+* 修改 package main ([b5d63ae](https://github.com/liuyanqing/tcos-upload/commit/b5d63ae72b64f51b774bc76c13dcdc52a11dd554))
+
+
+
 ## [1.0.5](https://github.com/liuyanqing/tcos-upload/compare/v1.0.4...v1.0.5) (2023-06-01)
 
 

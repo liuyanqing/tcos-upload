@@ -1,13 +1,13 @@
 {
 	"name": "tcos-upload",
-	"version": "1.0.5",
+	"version": "1.0.6",
 	"description": "上传静态资源到腾讯云 COS 的 Nodejs 插件",
 	"main": "dist/index.cjs",
 	"module": "index.js",
 	"types": "lib/index.d.ts",
 	"type": "module",
 	"files": [
-    "dist",
+		"dist",
 		"lib",
 		"index.js"
 	],
