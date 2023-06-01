@@ -2,7 +2,7 @@
 import chalk from "chalk"
 import COS from "cos-nodejs-sdk-v5"
 import { relative, join } from "path"
-import fse from "fs-extra"
+import fs from "fs"
 
 const requiredOption = ["SecretId", "SecretKey", "Bucket", "AppId", "Region"]
 
@@ -15,8 +15,12 @@ function getCosConf(extra) {
 
 function upload(option) {
   const {
+    // 上传到 COS 的路径
     cosBase = "",
+    // 本地需要上传的文件目录
     cwd = "",
+    // 本地需要上传的文件列表, 文件路径是相对于 cwd 目录
+    files = [],
     ...restOption
   } = option
   let conf = {
@@ -66,31 +70,42 @@ function upload(option) {
       }
     }
 
-    cwdWalk({
-      cwd,
-      onFile: (filePath) => {
-        needUploadfileNum++
-        uploadFiles(filePath, true)
-      },
-    })
+    if (files instanceof Array && files.length) {
+      files.forEach(async (target) => {
+        const filePath = join(cwd, target)
+        if ((await fs.promises.stat(filePath)).isFile()) {
+          needUploadfileNum++
+          uploadFiles(filePath, true)
+        }
+      })
+    } else {
+      walkCwd({
+        cwd,
+        onFile: (filePath) => {
+          needUploadfileNum++
+          uploadFiles(filePath, true)
+        },
+      })
+    }
+
     traverseEnd = true
   })
 
 }
 
-function cwdWalk({
+function walkCwd({
   cwd = "",
   onFile,
 }) {
-  const dirList = fse.readdirSync(cwd, { withFileTypes: true })
+  const dirList = fs.readdirSync(cwd, { withFileTypes: true })
   dirList.forEach(function(dirent) {
-    var filePath = join(cwd, dirent.name)
+    const filePath = join(cwd, dirent.name)
     if (dirent.isFile()) {
       onFile(filePath)
       return
     }
     if (dirent.isDirectory()) {
-      cwdWalk({
+      walkCwd({
         cwd: filePath,
         onFile,
       })

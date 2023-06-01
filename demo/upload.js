@@ -1,6 +1,6 @@
 import { resolve } from "path"
 import minimist from "minimist"
-import fse from "fs-extra"
+import fs from "fs"
 import upload from "../index.js"
 
 const args = minimist(process.argv.slice(2))
@@ -9,14 +9,14 @@ const buildMode = args.mode
 
 const cosMap = {}
 const COS_BASE = "camin/"
-const cwd = resolve("dist")
+const cwd = resolve("demo/dist")
 
 // h5-static-cos.json 里是资源上传的 COS 的参数，使用该插件时需自行替换成自己 COS 的参数
 const cosFile = resolve("./h5-static-cos.json")
 
-if (fse.existsSync(cosFile)) {
+if (fs.existsSync(cosFile)) {
   try {
-    const datas = fse.readJsonSync(cosFile)
+    const datas = JSON.parse(fs.readFileSync(cosFile, "utf8"))
     Object.assign(
       cosMap,
       datas.cosMap[buildMode],
@@ -25,37 +25,23 @@ if (fse.existsSync(cosFile)) {
         SecretKey: datas.SecretKey,
       }
     )
+  // eslint-disable-next-line no-empty
   } catch (err) {}
 }
 
 upload({
-  cosBase: `${COS_BASE}assets/`,
-  cwd: resolve(cwd, "assets"),
-  backup: "",
+  cosBase: `${COS_BASE}console/assets/1.2.0/`,
+  cwd,
   ...cosMap,
 }).then(() => {
   console.log("----finish 1")
 })
 
-
-
-
-const files = fse.readdirSync(cwd).filter(name => (!(/assets$/).test(name)))
-
-files.forEach(async (folder) => {
-  upload({
-    cosBase: `${COS_BASE}${folder}/`,
-    cwd: resolve(cwd, folder),
-    backup: "",
-    ...cosMap,
-  }).then(() => {
-    console.log("----finish 2")
-  })
-
-  // upload({
-  //   cosBase: `${COS_BASE}backup/${version}/${folder}/`,
-  //   cwd: resolve(cwd, folder),
-  //   ...cosMap,
-  // })
+upload({
+  cosBase: `${COS_BASE}console/`,
+  cwd,
+  files: ["index.html"],
+  ...cosMap,
+}).then(() => {
+  console.log("----finish 2")
 })
-
