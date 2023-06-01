@@ -1,3 +1,12 @@
+## [1.0.5](https://github.com/liuyanqing/tcos-upload/compare/v1.0.4...v1.0.5) (2023-06-01)
+
+
+### Features
+
+* add files option ([08563fd](https://github.com/liuyanqing/tcos-upload/commit/08563fdeab3cea45562ca0841e02a0adf84e4ede))
+
+
+
 ## [1.0.4](https://github.com/liuyanqing/tcos-upload/compare/v1.0.3...v1.0.4) (2023-05-31)
 
 
